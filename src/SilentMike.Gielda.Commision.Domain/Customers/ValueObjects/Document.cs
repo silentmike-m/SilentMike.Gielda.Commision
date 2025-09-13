@@ -5,8 +5,8 @@ using SilentMike.Gielda.Commision.Domain.Customers.Exceptions;
 
 public sealed record Document
 {
-    public string DocumentNumber { get; private set; }
-    public DocumentType DocumentType { get; private set; }
+    public string DocumentNumber { get; }
+    public DocumentType DocumentType { get; }
 
     public Document(string documentNumber, DocumentType documentType)
     {

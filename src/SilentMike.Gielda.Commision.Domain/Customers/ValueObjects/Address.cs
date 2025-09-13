@@ -4,9 +4,9 @@ using SilentMike.Gielda.Commision.Domain.Customers.Exceptions;
 
 public sealed record Address
 {
-    public string City { get; private set; }
-    public string Street { get; private set; }
-    public string ZipCode { get; private set; }
+    public string City { get; }
+    public string Street { get; }
+    public string ZipCode { get; }
 
     public Address(string city, string street, string zipCode)
     {

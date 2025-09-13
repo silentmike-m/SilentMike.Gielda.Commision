@@ -8,8 +8,8 @@ public sealed record Contact
     private const int DEFAULT_REGEX_TIMEOUT = 100;
     private const string EMAIL_REGEX = @"^\S+@\S+\.\S+$";
 
-    public string Email { get; private init; }
-    public string PhoneNumber { get; private init; }
+    public string Email { get; }
+    public string PhoneNumber { get; }
 
     public Contact(string email, string phoneNumber)
     {
