@@ -1,14 +1,14 @@
 <Project>
 
-  <PropertyGroup>
-    <Authors>Silent Mmike</Authors>
-    <ProductName>Commission</ProductName>
-    <TargetFramework>net8.0</TargetFramework>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Authors>Silent Mmike</Authors>
+        <ProductName>Commission</ProductName>
+        <TargetFramework>net8.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn></NoWarn>
-  </PropertyGroup>
+    <PropertyGroup>
+        <NoWarn></NoWarn>
+    </PropertyGroup>
 
 </Project>
