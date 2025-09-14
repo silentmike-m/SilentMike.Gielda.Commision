@@ -8,10 +8,10 @@ public sealed record Contact
     private const int DEFAULT_REGEX_TIMEOUT = 100;
     private const string EMAIL_REGEX = @"^\S+@\S+\.\S+$";
 
-    public string Email { get; }
-    public string PhoneNumber { get; }
+    public string? Email { get; }
+    public string? PhoneNumber { get; }
 
-    public Contact(string email, string phoneNumber)
+    public Contact(string? email, string? phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(phoneNumber))
         {

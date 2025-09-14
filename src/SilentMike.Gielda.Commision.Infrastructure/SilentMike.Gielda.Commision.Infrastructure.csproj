@@ -15,4 +15,8 @@
         <InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Customers\Interfaces\" />
+    </ItemGroup>
+
 </Project>

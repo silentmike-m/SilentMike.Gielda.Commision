@@ -58,7 +58,7 @@ internal sealed class UpsertCustomerValidator : AbstractValidator<UpsertCustomer
             .WithMessage(ValidationErrorCodes.CUSTOMER_EMAIL_WRONG_FORMAT_MESSAGE);
     }
 
-    private static bool IsNotEmpty(string email, string phoneNumber)
+    private static bool IsNotEmpty(string? email, string? phoneNumber)
         => string.IsNullOrWhiteSpace(email) is false
            || string.IsNullOrWhiteSpace(phoneNumber) is false;
 }
