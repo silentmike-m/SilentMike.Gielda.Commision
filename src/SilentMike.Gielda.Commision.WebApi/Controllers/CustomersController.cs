@@ -2,8 +2,9 @@
 
 using MediatR;
 using SilentMike.Gielda.Commision.Application.Customers.Commands;
+using SilentMike.Gielda.Commision.Application.Customers.Queries;
+using SilentMike.Gielda.Commision.WebApi.Mappers.Interfaces;
 using SilentMike.Gielda.Commision.WebApi.Models.Customers.Requests;
-using SilentMike.Gielda.Commision.WebApi.Models.Customers.Responses;
 
 internal static class CustomersController
 {
@@ -13,11 +14,36 @@ internal static class CustomersController
 
     private static IEndpointRouteBuilder MapGetCustomers(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/customers", () => new List<Customer>())
+        app.MapDelete("/customers/{customerId:guid}", async (Guid customerId, ISender mediator) =>
+            {
+                await mediator.Send(new DeleteCustomer
+                {
+                    CustomerId = customerId,
+                });
+            })
+            .WithName("DeleteCustomer")
+            .WithOpenApi();
+
+        app.MapGet("/customers", async (ICustomerMapper customerMapper, ISender mediator) =>
+            {
+                var customers = await mediator.Send(new GetCustomers());
+
+                return customers.Select(customerMapper.ToResponse);
+            })
             .WithName("GetCustomers")
             .WithOpenApi();
 
-        app.MapGet("/customers/{customerId:guid}", (Guid customerId) => new List<string>())
+        app.MapGet("/customers/{customerId:guid}", async (Guid customerId, ICustomerMapper customerMapper, ISender mediator) =>
+            {
+                var customer = await mediator.Send(new GetCustomer
+                {
+                    CustomerId = customerId,
+                });
+
+                return customer is not null
+                    ? Results.Ok(customerMapper.ToResponse(customer))
+                    : Results.NotFound();
+            })
             .WithName("GetCustomer")
             .WithOpenApi();
 
