@@ -1,12 +1,10 @@
-﻿namespace SilentMike.Gielda.Commision.Application.Customers.Commands;
+﻿namespace SilentMike.Gielda.Commision.Infrastructure.RepositoryMock.Models;
 
-using SilentMike.Gielda.Commision.Domain.Customers.Enums;
-
-public sealed record UpsertCustomer : IRequest
+internal sealed record CustomerDbEntity
 {
     public required string City { get; init; }
     public required string DocumentNumber { get; init; }
-    public required DocumentType DocumentType { get; init; }
+    public required int DocumentType { get; init; }
     public required string? Email { get; init; }
     public required string FirstName { get; init; }
     public required Guid Id { get; init; }
