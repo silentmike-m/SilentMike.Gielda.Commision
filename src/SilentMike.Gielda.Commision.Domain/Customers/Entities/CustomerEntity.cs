@@ -7,10 +7,10 @@ using SilentMike.Gielda.Commision.Domain.Types;
 
 public sealed class CustomerEntity : IEntity<CustomerId>
 {
-    public Address Address { get; private set; }
+    public Address Address { get; set; }
 
-    public Contact Contact { get; private set; }
-    public Document Document { get; private set; }
+    public Contact Contact { get; set; }
+    public Document Document { get; set; }
     public string FirstName { get; private set; } = null!;
     public CustomerId Id { get; }
     public string LastName { get; private set; } = null!;

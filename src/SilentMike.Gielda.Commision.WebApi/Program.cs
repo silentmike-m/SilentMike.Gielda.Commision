@@ -1,4 +1,5 @@
 using Serilog;
+using SilentMike.Gielda.Commision.Application;
 using SilentMike.Gielda.Commision.Application.Common.Shared;
 using SilentMike.Gielda.Commision.WebApi.Controllers;
 using SilentMike.Gielda.Commision.WebApi.Handlers;
@@ -34,6 +35,8 @@ builder.Services.ConfigureSwaggerGen(options =>
 });
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApplication();
 
 try
 {

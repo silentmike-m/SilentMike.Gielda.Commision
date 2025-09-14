@@ -2,6 +2,7 @@
 
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
+using SilentMike.Gielda.Commision.Application.Common.Exceptions;
 using SilentMike.Gielda.Commision.Domain.Common.Exceptions;
 
 internal sealed class ExceptionsHandler : IExceptionHandler
@@ -17,6 +18,8 @@ internal sealed class ExceptionsHandler : IExceptionHandler
     {
         var (statusCode, title) = exception switch
         {
+            ValidationException validationException => ((int)HttpStatusCode.BadRequest, validationException.Code),
+            ApplicationException applicationException => ((int)HttpStatusCode.InternalServerError, applicationException.Code),
             DomainException domainException => ((int)HttpStatusCode.BadRequest, domainException.Code),
             _ => ((int)HttpStatusCode.InternalServerError, DEFAULT_TITLE),
         };
