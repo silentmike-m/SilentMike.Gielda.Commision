@@ -15,4 +15,8 @@
         <InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Riok.Mapperly" />
+    </ItemGroup>
+
 </Project>

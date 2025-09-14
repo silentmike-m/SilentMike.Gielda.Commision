@@ -1,7 +1,10 @@
 using Serilog;
+using SilentMike.Gielda.Commision.Application;
 using SilentMike.Gielda.Commision.Application.Common.Shared;
+using SilentMike.Gielda.Commision.Infrastructure;
 using SilentMike.Gielda.Commision.WebApi.Controllers;
 using SilentMike.Gielda.Commision.WebApi.Handlers;
+using SilentMike.Gielda.Commision.WebApi.Mappers;
 
 const int EXIT_FAILURE = 1;
 const int EXIT_SUCCESS = 0;
@@ -34,6 +37,11 @@ builder.Services.ConfigureSwaggerGen(options =>
 });
 
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddMappers()
+    .AddApplication()
+    .AddInfrastructure();
 
 try
 {
