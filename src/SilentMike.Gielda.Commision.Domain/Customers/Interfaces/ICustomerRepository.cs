@@ -7,6 +7,6 @@ public interface ICustomerRepository
 {
     Task AddCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
     Task DeleteCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
-    Task<CustomerEntity?> GetCustomerAsync(CustomerId id, CancellationToken cancellationToken);
+    Task<CustomerEntity?> GetCustomerAsync(CustomerId customerId, CancellationToken cancellationToken);
     Task UpdateCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
 }

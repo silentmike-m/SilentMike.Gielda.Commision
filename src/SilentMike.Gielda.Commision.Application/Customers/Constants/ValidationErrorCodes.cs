@@ -20,4 +20,6 @@ internal static class ValidationErrorCodes
     public static readonly string CUSTOMER_EMPTY_STREET_MESSAGE = "Customer address street can not be empty.";
     public static readonly string CUSTOMER_EMPTY_ZIP_CODE = nameof(CUSTOMER_EMPTY_ZIP_CODE);
     public static readonly string CUSTOMER_EMPTY_ZIP_CODE_MESSAGE = "Customer address zip code can not be empty.";
+    public static readonly string DELETE_CUSTOMER_WITH_EXISTSING_CONTRACT = nameof(DELETE_CUSTOMER_WITH_EXISTSING_CONTRACT);
+    public static readonly string DELETE_CUSTOMER_WITH_EXISTSING_CONTRACT_MESSAGE = "Can not delete customer with contracts.";
 }

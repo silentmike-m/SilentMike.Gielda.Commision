@@ -50,7 +50,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_DOCUMENT_NUMBER
+                error.PropertyName == nameof(UpsertCustomer.DocumentNumber)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_DOCUMENT_NUMBER
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_DOCUMENT_NUMBER_MESSAGE);
     }
 
@@ -116,7 +117,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMAIL_WRONG_FORMAT
+                error.PropertyName == nameof(UpsertCustomer.Email)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMAIL_WRONG_FORMAT
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMAIL_WRONG_FORMAT_MESSAGE);
     }
 
@@ -149,7 +151,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_FIRST_NAME
+                error.PropertyName == nameof(UpsertCustomer.FirstName)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_FIRST_NAME
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_FIRST_NAME_MESSAGE);
     }
 
@@ -182,7 +185,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_ID
+                error.PropertyName == nameof(UpsertCustomer.Id)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_ID
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_ID_MESSAGE);
     }
 
@@ -215,7 +219,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_LAST_NAME
+                error.PropertyName == nameof(UpsertCustomer.LastName)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_LAST_NAME
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_LAST_NAME_MESSAGE);
     }
 
@@ -248,7 +253,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_STREET
+                error.PropertyName == nameof(UpsertCustomer.Street)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_STREET
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_STREET_MESSAGE);
     }
 
@@ -281,7 +287,8 @@ public sealed class UpsertCustomerValidatorTests
             .HaveCount(1)
             .And
             .Contain(error =>
-                error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_ZIP_CODE
+                error.PropertyName == nameof(UpsertCustomer.ZipCode)
+                && error.ErrorCode == ValidationErrorCodes.CUSTOMER_EMPTY_ZIP_CODE
                 && error.ErrorMessage == ValidationErrorCodes.CUSTOMER_EMPTY_ZIP_CODE_MESSAGE);
     }
 
