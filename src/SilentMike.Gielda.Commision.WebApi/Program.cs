@@ -1,54 +1,69 @@
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
+using SilentMike.Gielda.Commision.Application.Common.Shared;
+using SilentMike.Gielda.Commision.WebApi.Controllers;
+using SilentMike.Gielda.Commision.WebApi.Handlers;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+const int EXIT_FAILURE = 1;
+const int EXIT_SUCCESS = 0;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Host.UseSerilog((_, lc) => lc
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithProperty(nameof(ServiceConstants.ServiceName), ServiceConstants.ServiceName)
+    .Enrich.WithProperty(nameof(ServiceConstants.ServiceVersion), ServiceConstants.ServiceVersion));
+
+builder.Services
+    .AddProblemDetails(options =>
+        options.CustomizeProblemDetails = ctx =>
+        {
+            ctx.ProblemDetails.Extensions.Add("trace_id", ctx.HttpContext.TraceIdentifier);
+            ctx.ProblemDetails.Extensions.Add("request", $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
+            ctx.ProblemDetails.Extensions.Add("service_name", ServiceConstants.ServiceName);
+            ctx.ProblemDetails.Extensions.Add("service_version", ServiceConstants.ServiceVersion);
+        });
+
+builder.Services.AddExceptionHandler<ExceptionsHandler>();
+
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.ConfigureSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.FullName);
+});
+
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    Log.Information("Starting host...");
 
-app.UseHttpsRedirection();
+    var app = builder.Build();
 
-var summaries = new[]
-{
-    "Freezing",
-    "Bracing",
-    "Chilly",
-    "Cool",
-    "Mild",
-    "Warm",
-    "Balmy",
-    "Hot",
-    "Sweltering",
-    "Scorching",
-};
+    app.UseExceptionHandler();
 
-app.MapGet("/weatherforecast", () =>
+    if (app.Environment.IsProduction() is false)
     {
-        var forecast = Enumerable.Range(start: 1, count: 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(minValue: -20, maxValue: 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+    app.UseHttpsRedirection();
 
-app.Run();
+    app.MapCustomers();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+    await app.RunAsync();
+
+    return EXIT_SUCCESS;
+}
+catch (Exception exception)
 {
-    public int TemperatureF => 32 + (int)(this.TemperatureC / 0.5556);
+    Log.Fatal(exception, "Host terminated unexpectedly");
+
+    return EXIT_FAILURE;
+}
+finally
+{
+    await Log.CloseAndFlushAsync();
 }
