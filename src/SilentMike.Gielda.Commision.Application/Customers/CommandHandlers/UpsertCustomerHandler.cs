@@ -22,7 +22,7 @@ internal sealed class UpsertCustomerHandler : IRequestHandler<UpsertCustomer>
     {
         this.logger.LogUpsertingCustomer(request.Id);
 
-        var customer = await this.customerRepository.GetCustomerAsync(request.Id, cancellationToken);
+        var customer = await this.customerRepository.GetAsync(request.Id, cancellationToken);
 
         if (customer is null)
         {
@@ -44,7 +44,7 @@ internal sealed class UpsertCustomerHandler : IRequestHandler<UpsertCustomer>
 
         var customer = new CustomerEntity(request.Id, address, contact, document, request.FirstName, request.LastName);
 
-        await this.customerRepository.AddCustomerAsync(customer, cancellationToken);
+        await this.customerRepository.AddAsync(customer, cancellationToken);
     }
 
     private async Task UpdateCustomerAsync(CustomerEntity customer, UpsertCustomer request, CancellationToken cancellationToken)
@@ -56,7 +56,7 @@ internal sealed class UpsertCustomerHandler : IRequestHandler<UpsertCustomer>
         customer.Contact = CreateContact(request);
         customer.Document = CreateDocument(request);
 
-        await this.customerRepository.UpdateCustomerAsync(customer, cancellationToken);
+        await this.customerRepository.UpdateAsync(customer, cancellationToken);
     }
 
     private static Address CreateAddress(UpsertCustomer request)

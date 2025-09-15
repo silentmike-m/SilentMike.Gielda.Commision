@@ -24,7 +24,7 @@ internal sealed class GetCustomersHandler : IRequestHandler<GetCustomers, IReadO
     {
         this.logger.LogGettingCustomers();
 
-        var customers = await this.customerReadService.GetCustomersAsync(cancellationToken);
+        var customers = await this.customerReadService.GetAsync(cancellationToken);
 
         return customers
             .Select(customer => this.customerMapper.ToDto(customer))

@@ -6,7 +6,7 @@ using SilentMike.Gielda.Commision.Domain.Contracts.Exceptions;
 using SilentMike.Gielda.Commision.Domain.Contracts.ValueObjects;
 
 [TestClass]
-public sealed class ContractItemTests
+public sealed class ContractItemEntityTests
 {
     [TestMethod]
     public void SetName_Should_ChangeName()
@@ -17,7 +17,7 @@ public sealed class ContractItemTests
         var id = Guid.NewGuid();
         var value = new ContractItemValue(customerValue: 5.67m, price: 10.45m);
 
-        var contractItem = new ContractItem(id, "old name", value);
+        var contractItem = new ContractItemEntity(id, "old name", value);
 
         // Act
         contractItem.SetName(name);
@@ -33,14 +33,14 @@ public sealed class ContractItemTests
             .Be(value);
     }
 
-    [TestMethod, DataRow(""), DataRow(" ")]
+    [TestMethod] [DataRow("")] [DataRow(" ")]
     public void SetName_Should_ContractItemEmptyNameException_When_NameIsEmpty(string name)
     {
         // Arrange
         var id = Guid.NewGuid();
         var value = new ContractItemValue(customerValue: 5.67m, price: 10.45m);
 
-        var contractItem = new ContractItem(id, "old name", value);
+        var contractItem = new ContractItemEntity(id, "old name", value);
 
         // Act
         var action = () => contractItem.SetName(name);
@@ -51,7 +51,7 @@ public sealed class ContractItemTests
             .Where(exception => exception.Code == ErrorCodes.CONTRACT_ITEM_EMPTY_NAME);
     }
 
-    [TestMethod, DataRow(""), DataRow("  ")]
+    [TestMethod] [DataRow("")] [DataRow("  ")]
     public void Should_ContractItemEmptyNameException_When_NameIsEmpty(string name)
     {
         // Arrange
@@ -60,7 +60,7 @@ public sealed class ContractItemTests
         var value = new ContractItemValue(customerValue: 5.67m, price: 10.45m);
 
         // Act
-        var action = () => new ContractItem(id, name, value);
+        var action = () => new ContractItemEntity(id, name, value);
 
         // Assert
         action.Should()
@@ -78,7 +78,7 @@ public sealed class ContractItemTests
         var value = new ContractItemValue(customerValue: 5.67m, price: 10.45m);
 
         // Act
-        var contractItem = new ContractItem(id, name, value);
+        var contractItem = new ContractItemEntity(id, name, value);
 
         // Assert
         contractItem.Id.Value.Should()

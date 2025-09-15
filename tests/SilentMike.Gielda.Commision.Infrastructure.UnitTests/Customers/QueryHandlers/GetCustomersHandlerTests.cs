@@ -56,7 +56,7 @@ public sealed class GetCustomersHandlerTests
         var request = new GetCustomers();
 
         this.customerReadServiceMock
-            .Setup(service => service.GetCustomersAsync(It.IsAny<CancellationToken>()))
+            .Setup(service => service.GetAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync([READ_MODEL]);
 
         // Act
@@ -76,7 +76,7 @@ public sealed class GetCustomersHandlerTests
         var request = new GetCustomers();
 
         this.customerReadServiceMock
-            .Setup(service => service.GetCustomersAsync(It.IsAny<CancellationToken>()))
+            .Setup(service => service.GetAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         // Act

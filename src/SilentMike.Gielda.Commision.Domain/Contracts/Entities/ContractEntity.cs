@@ -4,31 +4,39 @@ using SilentMike.Gielda.Commision.Domain.Common.Interfaces;
 using SilentMike.Gielda.Commision.Domain.Contracts.Exceptions;
 using SilentMike.Gielda.Commision.Domain.Types;
 
-public sealed class Contract : IEntity<ContractId>
+public sealed class ContractEntity : IEntity<ContractId>
 {
-    private readonly List<ContractItem> items = [];
+    private readonly List<ContractItemEntity> items = [];
 
     public decimal Commission { get; private set; }
     public CustomerId CustomerId { get; }
     public ContractId Id { get; }
-    public IReadOnlyList<ContractItem> Items => this.items.AsReadOnly();
+    public IReadOnlyList<ContractItemEntity> Items => this.items.AsReadOnly();
+    public ContractNumber Number { get; }
 
-    public Contract(ContractId id, CustomerId customerId, decimal commission)
+    public ContractEntity(ContractId id, CustomerId customerId, decimal commission, ContractNumber number)
     {
         this.Id = id;
         this.CustomerId = customerId;
 
         this.SetCommission(commission);
-    }
 
-    public void AddItem(ContractItem itemToAdd)
-    {
-        if (this.items.Any(item => item.Id == itemToAdd.Id))
+        if (string.IsNullOrWhiteSpace(number.Value))
         {
-            throw new ContractItemAlreadyExistsException(itemToAdd.Id);
+            throw new ContractEmptyNumberException();
         }
 
-        this.items.Add(itemToAdd);
+        this.Number = number;
+    }
+
+    public void AddItem(ContractItemEntity itemEntityToAdd)
+    {
+        if (this.items.Any(item => item.Id == itemEntityToAdd.Id))
+        {
+            throw new ContractItemAlreadyExistsException(itemEntityToAdd.Id);
+        }
+
+        this.items.Add(itemEntityToAdd);
     }
 
     public void RemoveItem(ContractItemId itemId)

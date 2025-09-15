@@ -12,3 +12,13 @@ public sealed class ContractItemInvalidPriceException : DomainException
     {
     }
 }
+
+public sealed class ContractEmptyNumberException : DomainException
+{
+    public override string Code => ErrorCodes.CONTRACT_EMPTY_NUMBER;
+
+    public ContractEmptyNumberException(Exception? innerException = null)
+        : base("Contract number can not be empty", innerException)
+    {
+    }
+}

@@ -7,7 +7,7 @@ using SilentMike.Gielda.Commision.Infrastructure.Customers.Interfaces;
 using SilentMike.Gielda.Commision.Infrastructure.Customers.Services;
 
 [ExcludeFromCodeCoverage]
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static IServiceCollection AddCustomers(this IServiceCollection services)
     {

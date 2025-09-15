@@ -41,11 +41,11 @@ public sealed class UpsertCustomerHandlerTests
         };
 
         this.customerRepositoryMock
-            .Setup(repository => repository.GetCustomerAsync(It.Is<CustomerId>(id => id.Value == request.Id), It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(It.Is<CustomerId>(id => id.Value == request.Id), It.IsAny<CancellationToken>()))
             .ReturnsAsync((CustomerEntity?)null);
 
         this.customerRepositoryMock
-            .Setup(repository => repository.AddCustomerAsync(It.IsAny<CustomerEntity>(), It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.AddAsync(It.IsAny<CustomerEntity>(), It.IsAny<CancellationToken>()))
             .Callback<CustomerEntity, CancellationToken>((customer, _) => createdCustomer = customer);
 
         // Act
@@ -95,7 +95,7 @@ public sealed class UpsertCustomerHandlerTests
         };
 
         this.customerRepositoryMock
-            .Setup(repository => repository.GetCustomerAsync(It.Is<CustomerId>(id => id.Value == request.Id), It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(It.Is<CustomerId>(id => id.Value == request.Id), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
         // Act
@@ -103,7 +103,7 @@ public sealed class UpsertCustomerHandlerTests
 
         // Assert
         this.customerRepositoryMock
-            .Verify(repository => repository.UpdateCustomerAsync(customer, It.IsAny<CancellationToken>()), Times.Once);
+            .Verify(repository => repository.UpdateAsync(customer, It.IsAny<CancellationToken>()), Times.Once);
 
         var expectedCustomer = new CustomerEntity(
             request.Id,

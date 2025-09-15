@@ -24,7 +24,7 @@ internal sealed class GetCustomerHandler : IRequestHandler<GetCustomer, Customer
     {
         this.logger.LogGettingCustomer(request.CustomerId);
 
-        var customer = await this.customerReadService.GetCustomerAsync(request.CustomerId, cancellationToken);
+        var customer = await this.customerReadService.GetAsync(request.CustomerId, cancellationToken);
 
         return customer is null
             ? null

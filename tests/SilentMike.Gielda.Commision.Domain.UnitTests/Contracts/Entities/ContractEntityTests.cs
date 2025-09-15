@@ -4,23 +4,23 @@ using SilentMike.Gielda.Commision.Domain.Contracts.Constants;
 using SilentMike.Gielda.Commision.Domain.Contracts.Entities;
 using SilentMike.Gielda.Commision.Domain.Contracts.Exceptions;
 using SilentMike.Gielda.Commision.Domain.Contracts.ValueObjects;
-using Contract = SilentMike.Gielda.Commision.Domain.Contracts.Entities.Contract;
 
 [TestClass]
-public sealed class ContractTests
+public sealed class ContractEntityTests
 {
     [TestMethod]
     public void AddItem_Should_AddItem()
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
-        var item = new ContractItem(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
+        var item = new ContractItemEntity(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
 
         // Act
         contract.AddItem(item);
@@ -39,6 +39,9 @@ public sealed class ContractTests
             .HaveCount(1)
             .And
             .Contain(item);
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
     }
 
     [TestMethod]
@@ -46,13 +49,14 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
-        var item = new ContractItem(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
+        var item = new ContractItemEntity(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
 
         contract.AddItem(item);
 
@@ -77,6 +81,9 @@ public sealed class ContractTests
             .HaveCount(1)
             .And
             .Contain(item);
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
     }
 
     [TestMethod]
@@ -84,11 +91,12 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
         // Act
         var action = () => contract.RemoveItem(id);
@@ -108,6 +116,9 @@ public sealed class ContractTests
 
         contract.Items.Should()
             .BeEmpty();
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
     }
 
     [TestMethod]
@@ -115,13 +126,14 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
-        var item = new ContractItem(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
+        var item = new ContractItemEntity(Guid.NewGuid(), "Item name", new ContractItemValue(customerValue: 5.5m, price: 10.5m));
 
         contract.AddItem(item);
 
@@ -140,6 +152,9 @@ public sealed class ContractTests
 
         contract.Items.Should()
             .BeEmpty();
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
     }
 
     [TestMethod]
@@ -147,11 +162,12 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission: 2.3m);
+        var contract = new ContractEntity(id, customerId, commission: 2.3m, contractNumber);
 
         // Act
         contract.SetCommission(commission);
@@ -168,6 +184,9 @@ public sealed class ContractTests
 
         contract.Items.Should()
             .BeEmpty();
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
     }
 
     [TestMethod]
@@ -175,11 +194,12 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
         // Act
         var action = () => contract.SetCommission(-23.5m);
@@ -195,12 +215,13 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = 25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
         // Act
-        var contract = new Contract(id, customerId, commission);
+        var contract = new ContractEntity(id, customerId, commission, contractNumber);
 
         // Assert
         contract.Commission.Should()
@@ -214,6 +235,27 @@ public sealed class ContractTests
 
         contract.Items.Should()
             .BeEmpty();
+
+        contract.Number.Value.Should()
+            .Be(contractNumber);
+    }
+
+    [TestMethod] [DataRow("")] [DataRow("   ")]
+    public void Should_Throw(string contractNumber)
+    {
+        // Arrange
+        const decimal commission = 25.5m;
+
+        var customerId = Guid.NewGuid();
+        var id = Guid.NewGuid();
+
+        // Act
+        var action = () => new ContractEntity(id, customerId, commission, contractNumber);
+
+        // Assert
+        action.Should()
+            .Throw<ContractEmptyNumberException>()
+            .Where(exception => exception.Code == ErrorCodes.CONTRACT_EMPTY_NUMBER);
     }
 
     [TestMethod]
@@ -221,12 +263,13 @@ public sealed class ContractTests
     {
         // Arrange
         const decimal commission = -25.5m;
+        const string contractNumber = "PX2025/01";
 
         var customerId = Guid.NewGuid();
         var id = Guid.NewGuid();
 
         // Act
-        var action = () => new Contract(id, customerId, commission);
+        var action = () => new ContractEntity(id, customerId, commission, contractNumber);
 
         // Assert
         action.Should()

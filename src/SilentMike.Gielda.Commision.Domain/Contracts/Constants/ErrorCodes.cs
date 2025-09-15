@@ -2,6 +2,7 @@
 
 internal static class ErrorCodes
 {
+    public static readonly string CONTRACT_EMPTY_NUMBER = nameof(CONTRACT_EMPTY_NUMBER);
     public static readonly string CONTRACT_INVALID_COMMISION_VALUE = nameof(CONTRACT_INVALID_COMMISION_VALUE);
     public static readonly string CONTRACT_ITEM_ALREADY_EXISTS = nameof(CONTRACT_ITEM_ALREADY_EXISTS);
     public static readonly string CONTRACT_ITEM_EMPTY_NAME = nameof(CONTRACT_ITEM_EMPTY_NAME);

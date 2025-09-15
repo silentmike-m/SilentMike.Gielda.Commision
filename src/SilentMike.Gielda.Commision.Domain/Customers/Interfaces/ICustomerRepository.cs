@@ -5,8 +5,8 @@ using SilentMike.Gielda.Commision.Domain.Types;
 
 public interface ICustomerRepository
 {
-    Task AddCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
-    Task DeleteCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
-    Task<CustomerEntity?> GetCustomerAsync(CustomerId customerId, CancellationToken cancellationToken);
-    Task UpdateCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken);
+    Task AddAsync(CustomerEntity entity, CancellationToken cancellationToken);
+    Task DeleteAsync(CustomerEntity entity, CancellationToken cancellationToken);
+    Task<CustomerEntity?> GetAsync(CustomerId customerId, CancellationToken cancellationToken);
+    Task UpdateAsync(CustomerEntity entity, CancellationToken cancellationToken);
 }

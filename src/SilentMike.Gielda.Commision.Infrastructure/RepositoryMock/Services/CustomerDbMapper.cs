@@ -17,9 +17,9 @@ internal sealed partial class CustomerDbMapper : ICustomerDbMapper
     [MapProperty(nameof(CustomerEntity.Contact.PhoneNumber), nameof(CustomerDbEntity.PhoneNumber))]
     [MapProperty(nameof(CustomerEntity.Document.DocumentNumber), nameof(CustomerDbEntity.DocumentNumber))]
     [MapProperty(nameof(CustomerEntity.Document.DocumentType), nameof(CustomerDbEntity.DocumentType))]
-    public partial CustomerDbEntity ToDbModel(CustomerEntity coordinates);
+    public partial CustomerDbEntity ToDbModel(CustomerEntity customer);
 
-    public partial CustomerReadModel ToReadModel(CustomerDbEntity coordinates);
+    public partial CustomerReadModel ToReadModel(CustomerDbEntity customer);
 
-    private Guid CustomerIdToGuid(CustomerId id) => id.Value;
+    private static Guid CustomerIdToGuid(CustomerId id) => id.Value;
 }

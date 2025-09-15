@@ -60,7 +60,7 @@ public sealed class GetCustomerHandlerTests
         };
 
         this.customerReadServiceMock
-            .Setup(service => service.GetCustomerAsync(It.Is<CustomerId>(id => id.Value == READ_MODEL.Id), It.IsAny<CancellationToken>()))
+            .Setup(service => service.GetAsync(It.Is<CustomerId>(id => id.Value == READ_MODEL.Id), It.IsAny<CancellationToken>()))
             .ReturnsAsync(READ_MODEL);
 
         // Act
@@ -83,7 +83,7 @@ public sealed class GetCustomerHandlerTests
         };
 
         this.customerReadServiceMock
-            .Setup(service => service.GetCustomerAsync(It.IsAny<CustomerId>(), It.IsAny<CancellationToken>()))
+            .Setup(service => service.GetAsync(It.IsAny<CustomerId>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((CustomerReadModel?)null);
 
         // Act

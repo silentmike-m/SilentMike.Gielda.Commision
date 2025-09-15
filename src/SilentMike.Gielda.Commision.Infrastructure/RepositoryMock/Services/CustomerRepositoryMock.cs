@@ -16,19 +16,19 @@ internal sealed class CustomerRepositoryMock : ICustomerRepository
     public CustomerRepositoryMock(ICustomerDbMapper customerDbMapper)
         => this.customerDbMapper = customerDbMapper;
 
-    public Task AddCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken)
-        => CustomersStore.Customers.TryAdd(customer.Id.Value, this.customerDbMapper.ToDbModel(customer)) is false
+    public Task AddAsync(CustomerEntity entity, CancellationToken cancellationToken)
+        => CustomersStore.Customers.TryAdd(entity.Id.Value, this.customerDbMapper.ToDbModel(entity)) is false
             ? throw new Exception()
             : Task.CompletedTask;
 
-    public Task DeleteCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken)
+    public Task DeleteAsync(CustomerEntity entity, CancellationToken cancellationToken)
     {
-        CustomersStore.Customers.Remove(customer.Id.Value);
+        CustomersStore.Customers.Remove(entity.Id.Value);
 
         return Task.CompletedTask;
     }
 
-    public Task<CustomerEntity?> GetCustomerAsync(CustomerId customerId, CancellationToken cancellationToken)
+    public Task<CustomerEntity?> GetAsync(CustomerId customerId, CancellationToken cancellationToken)
     {
         var result = CustomersStore.Customers.TryGetValue(customerId.Value, out var customer)
             ? new CustomerEntity(
@@ -44,14 +44,14 @@ internal sealed class CustomerRepositoryMock : ICustomerRepository
         return Task.FromResult(result);
     }
 
-    public Task UpdateCustomerAsync(CustomerEntity customer, CancellationToken cancellationToken)
+    public Task UpdateAsync(CustomerEntity entity, CancellationToken cancellationToken)
     {
-        if (CustomersStore.Customers.ContainsKey(customer.Id.Value) is false)
+        if (CustomersStore.Customers.ContainsKey(entity.Id.Value) is false)
         {
             throw new Exception();
         }
 
-        CustomersStore.Customers[customer.Id.Value] = this.customerDbMapper.ToDbModel(customer);
+        CustomersStore.Customers[entity.Id.Value] = this.customerDbMapper.ToDbModel(entity);
 
         return Task.CompletedTask;
     }

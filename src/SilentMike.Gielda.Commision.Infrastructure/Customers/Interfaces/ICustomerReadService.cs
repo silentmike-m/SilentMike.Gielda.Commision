@@ -5,6 +5,6 @@ using SilentMike.Gielda.Commision.Infrastructure.Customers.Models;
 
 internal interface ICustomerReadService
 {
-    Task<CustomerReadModel?> GetCustomerAsync(CustomerId customerId, CancellationToken cancellationToken);
-    Task<IReadOnlyList<CustomerReadModel>> GetCustomersAsync(CancellationToken cancellationToken);
+    Task<CustomerReadModel?> GetAsync(CustomerId customerId, CancellationToken cancellationToken);
+    Task<IReadOnlyList<CustomerReadModel>> GetAsync(CancellationToken cancellationToken);
 }

@@ -20,11 +20,11 @@ internal sealed class DeleteCustomerHandler : IRequestHandler<DeleteCustomer>
     {
         this.logger.LogDeletingCustomer(request.CustomerId);
 
-        var customer = await this.customerRepository.GetCustomerAsync(request.CustomerId, cancellationToken);
+        var customer = await this.customerRepository.GetAsync(request.CustomerId, cancellationToken);
 
         if (customer is not null)
         {
-            await this.customerRepository.DeleteCustomerAsync(customer, cancellationToken);
+            await this.customerRepository.DeleteAsync(customer, cancellationToken);
         }
     }
 }

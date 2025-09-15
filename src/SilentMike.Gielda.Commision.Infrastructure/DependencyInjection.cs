@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using SilentMike.Gielda.Commision.Infrastructure.Contracts;
 using SilentMike.Gielda.Commision.Infrastructure.Customers;
 using SilentMike.Gielda.Commision.Infrastructure.RepositoryMock;
 
@@ -17,6 +18,7 @@ public static class DependencyInjection
 
         services
             .AddRepositoryMock()
+            .AddContracts()
             .AddCustomers();
 
         return services;

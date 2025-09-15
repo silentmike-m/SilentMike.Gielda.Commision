@@ -39,7 +39,7 @@ public sealed class DeleteCustomerHandlerTests
         };
 
         this.customerRepositoryMock
-            .Setup(repository => repository.GetCustomerAsync(It.Is<CustomerId>(id => id.Value == customer.Id.Value), It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(It.Is<CustomerId>(id => id.Value == customer.Id.Value), It.IsAny<CancellationToken>()))
             .ReturnsAsync(customer);
 
         // Act
@@ -47,7 +47,7 @@ public sealed class DeleteCustomerHandlerTests
 
         // Assert
         this.customerRepositoryMock
-            .Verify(repository => repository.DeleteCustomerAsync(customer, It.IsAny<CancellationToken>()), Times.Once);
+            .Verify(repository => repository.DeleteAsync(customer, It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public sealed class DeleteCustomerHandlerTests
         };
 
         this.customerRepositoryMock
-            .Setup(repository => repository.GetCustomerAsync(It.IsAny<CustomerId>(), It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(It.IsAny<CustomerId>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((CustomerEntity?)null);
 
         // Act
@@ -68,6 +68,6 @@ public sealed class DeleteCustomerHandlerTests
 
         // Assert
         this.customerRepositoryMock
-            .Verify(repository => repository.DeleteCustomerAsync(It.IsAny<CustomerEntity>(), It.IsAny<CancellationToken>()), Times.Never);
+            .Verify(repository => repository.DeleteAsync(It.IsAny<CustomerEntity>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }

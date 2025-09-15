@@ -14,7 +14,7 @@ internal sealed class CustomerReadServiceMock : ICustomerReadService
     public CustomerReadServiceMock(ICustomerDbMapper customerDbMapper)
         => this.customerDbMapper = customerDbMapper;
 
-    public Task<CustomerReadModel?> GetCustomerAsync(CustomerId customerId, CancellationToken cancellationToken)
+    public Task<CustomerReadModel?> GetAsync(CustomerId customerId, CancellationToken cancellationToken)
     {
         var result = CustomersStore.Customers.TryGetValue(customerId.Value, out var customer)
             ? this.customerDbMapper.ToReadModel(customer)
@@ -23,7 +23,7 @@ internal sealed class CustomerReadServiceMock : ICustomerReadService
         return Task.FromResult(result);
     }
 
-    public Task<IReadOnlyList<CustomerReadModel>> GetCustomersAsync(CancellationToken cancellationToken)
+    public Task<IReadOnlyList<CustomerReadModel>> GetAsync(CancellationToken cancellationToken)
     {
         var customers = CustomersStore.Customers.Values
             .Select(customer => this.customerDbMapper.ToReadModel(customer))
